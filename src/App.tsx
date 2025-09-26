@@ -29,6 +29,31 @@ interface ReportTemplate {
   data: Partial<ReportData>
 }
 
+// Компонент для тестирования ввода
+const TestInput = () => {
+  const [testValue, setTestValue] = useState('')
+  
+  return (
+    <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-300 mb-4">
+      <h3 className="text-lg font-bold text-purple-800 mb-2">🔧 ИЗОЛИРОВАННЫЙ ТЕСТ</h3>
+      <label className="block text-sm font-medium text-purple-700 mb-2">
+        Полностью изолированное поле (свое состояние):
+      </label>
+      <input
+        type="text"
+        value={testValue}
+        onChange={(e) => {
+          console.log('Isolated test change:', e.target.value)
+          setTestValue(e.target.value)
+        }}
+        className="w-full p-3 border-2 border-purple-300 rounded-lg"
+        placeholder="Изолированный тест..."
+      />
+      <p className="text-xs text-purple-600 mt-1">Значение: "{testValue}"</p>
+    </div>
+  )
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState<'report' | 'parameters'>('report')
   
@@ -138,7 +163,17 @@ function App() {
   })
 
   const updateField = (field: keyof ReportData, value: string) => {
-    setReportData(prev => ({ ...prev, [field]: value }))
+    console.log('updateField called:', field, value)
+    try {
+      setReportData(prev => {
+        console.log('Previous state:', prev)
+        const newData = { ...prev, [field]: value }
+        console.log('New state will be:', newData)
+        return newData
+      })
+    } catch (error) {
+      console.error('Error in updateField:', error)
+    }
   }
 
   const applyTemplate = (template: ReportTemplate) => {
@@ -453,6 +488,28 @@ function App() {
       </header>
 
       <div className="p-6 space-y-8">
+        {/* ИЗОЛИРОВАННЫЙ ТЕСТ */}
+        <TestInput />
+        
+        {/* ТЕСТОВОЕ ПОЛЕ для отладки */}
+        <section className="bg-red-50 p-4 rounded-lg border-2 border-red-300">
+          <h3 className="text-lg font-bold text-red-800 mb-2">🔧 ТЕСТ ВВОДА ТЕКСТА</h3>
+          <label className="block text-sm font-medium text-red-700 mb-2">
+            Тестовое поле (если здесь можно печатать, то проблема в других полях):
+          </label>
+          <input
+            type="text"
+            value={reportData.fullName}
+            onChange={(e) => {
+              console.log('Test input change:', e.target.value)
+              updateField('fullName', e.target.value)
+            }}
+            className="w-full p-3 border-2 border-red-300 rounded-lg focus:border-red-500 outline-none"
+            placeholder="Введите любой текст для тестирования..."
+          />
+          <p className="text-xs text-red-600 mt-1">Текущее значение: "{reportData.fullName}"</p>
+        </section>
+
         {/* Шаблоны отчетов */}
         <section className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-200">
           <h2 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2 flex items-center gap-2">
@@ -495,10 +552,12 @@ function App() {
               <input
                 type="text"
                 value={reportData.date}
-                onChange={(e) => updateField('date', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+                onChange={(e) => {
+                  console.log('Date input change:', e.target.value)
+                  updateField('date', e.target.value)
+                }}
+                className="w-full p-3 border rounded-lg"
                 placeholder="дд.мм.гггг"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Автоматически устанавливается сегодняшняя дата</p>
             </div>
@@ -543,10 +602,12 @@ function App() {
               </label>
               <textarea
                 value={reportData.fullName}
-                onChange={(e) => updateField('fullName', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
+                onChange={(e) => {
+                  console.log('FullName textarea change:', e.target.value)
+                  updateField('fullName', e.target.value)
+                }}
+                className="w-full p-3 border rounded-lg min-h-[80px]"
                 placeholder="Иванов Иван Иванович, 15.05.1990"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Полное ФИО и дата рождения в формате дд.мм.гггг</p>
             </div>
@@ -830,6 +891,25 @@ function App() {
             </ul>
           </div>
         </div>
+
+        {/* ВТОРОЕ ТЕСТОВОЕ ПОЛЕ */}
+        <section className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300">
+          <h3 className="text-lg font-bold text-yellow-800 mb-2">🔧 ВТОРОЙ ТЕСТ</h3>
+          <label className="block text-sm font-medium text-yellow-700 mb-2">
+            Второе тестовое поле (другое поле для сравнения):
+          </label>
+          <textarea
+            value={reportData.phoneNumbers}
+            onChange={(e) => {
+              console.log('Second test change:', e.target.value)
+              updateField('phoneNumbers', e.target.value)
+            }}
+            className="w-full p-3 border-2 border-yellow-300 rounded-lg"
+            placeholder="Второй тест..."
+            rows={3}
+          />
+          <p className="text-xs text-yellow-600 mt-1">Текущее значение: "{reportData.phoneNumbers}"</p>
+        </section>
       </div>
     </div>
   )
