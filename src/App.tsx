@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, Heart } from 'lucide-react'
+import { FileText, Heart, AlertTriangle, Eye, MessageSquare, CreditCard, Shield } from 'lucide-react'
 import './index.css'
 
 interface ReportData {
@@ -37,20 +37,54 @@ function App() {
     cars: '',
     socialAccounts: '',
     phoneBookInfo: '',
-    vkActivity: 'Зафиксирована активность основного аккаунта ВК. В полной проверке доступна детальная информация о том, с кем именно общается вторая половина, включая анализ переписок и совместной цифровой активности с друзьями.',
-    additionalVkAccount: `При поиске дополнительных профилей найден аккаунт ВК с совпадениями в цифровых параметрах. Профиль: https://vk.com/id362****24, регистрация: 23.01.2025. Выявлены совпадения: синхронизированная почта, параметры устройства, MAC/DNS/IP адреса. Активность: несколько раз в месяц, 18 друзей (2 пересекаются с основным профилем), 24 сообщества (4 совпадают). Последняя активность: 21.08.2025. Полный анализ всех профилей ВК с расширенными параметрами доступен в полной проверке.`,
-    telegramAnalysis: 'В основном аккаунте зафиксирована ежедневная цифровая активность с несколькими постоянными пользователями. В полной проверке доступна детальная выгрузка цифровой активности в группах и каналах Telegram, включая информацию о том, с кем именно общается вторая половина и анализ совместной активности с друзьями.',
-    datingAnalysis: `Зафиксирована удалённая анкета на Mamba.ru, зарегистрированная 12.04.2023 по номеру проверяемого. Ссылка: http://www.mamba.ru/anketa.phtml?oid=826****, 2 фотографии, удалена в архив: 09.06.2025. Поскольку анкета в архиве, стандартная мини-проверка не позволяет установить точную причастность. Однако возможен детальный анализ с использованием специализированных инструментов в полной проверке для установления связи с проверяемым лицом.`,
-    purchases: 'В полной проверке доступен подробный отчет о покупках вашей второй половины за последние полгода в розничных магазинах и интернет-ресурсах.',
-    promotion: `Мини-отчет по проверке верности содержит ограниченную информацию, которой недостаточно для полного развеивания сомнений и получения ответов на все интересующие вопросы. Специальное предложение: промокод PROMO888 дает скидку 30% на полную проверку при заказе в день получения мини-отчета. Закажите полную проверку, оставьте отзыв в нашем сообществе ВКонтакте и получите максимально детальную информацию о цифровой активности вашей второй половины.`,
-    fullCheckInfo: `Что вы получите при заказе полной проверки на верность:
-• Профессиональную проверку онлайн с анализом множества источников
-• Глубокий анализ цифровой жизни партнера во всех соцсетях и мессенджерах  
-• Информацию о скрытых и удаленных профилях в социальных сетях
-• Подробный анализ активности: с кем, как часто и когда общается партнер
-• Понятный структурированный отчет с проверкой на достоверность
-• Отчет о покупках за последние полгода в магазинах и онлайн
-• 100% конфиденциальность и анонимность проверки`
+    vkActivity: '🔍 В основном профиле ВК обнаружена регулярная активность с определенными пользователями. Зафиксированы частые взаимодействия, лайки и комментарии. 💬 В полной проверке вы узнаете: кто именно эти люди, характер общения, время активности и насколько близки эти отношения.',
+    additionalVkAccount: `🚨 КРИТИЧЕСКОЕ ОБНАРУЖЕНИЕ: Найден скрытый профиль ВК!
+
+📱 Профиль: https://vk.com/id362****24 (создан 23.01.2025)
+🔍 Найдено по совпадению цифровых отпечатков устройства
+
+⚠️ ЧТО НАСТОРАЖИВАЕТ:
+• Профиль активен несколько раз в месяц
+• 18 друзей (2 пересекаются с основным профилем!)  
+• 24 сообщества (4 совпадают с основным)
+• Последняя активность: 21.08.2025
+
+💡 Возникает вопрос: зачем нужен второй профиль?
+🔓 Полный анализ покажет всю правду о скрытой активности!`,
+    telegramAnalysis: '📱 ОБНАРУЖЕНА СКРЫТАЯ АКТИВНОСТЬ В TELEGRAM!\n\n🕒 Ежедневная активность с 3-5 постоянными контактами\n💬 Регулярная переписка в вечернее время (20:00-23:00)\n👥 Участие в закрытых группах и каналах\n\n❓ С КЕМ именно общается ваша половина каждый день?\n🔍 Полная проверка раскроет ВСЕ секреты Telegram-активности!',
+    datingAnalysis: `💔 ШОКИРУЮЩАЯ НАХОДКА: Обнаружен профиль на сайте знакомств!
+
+🌐 Сайт: Mamba.ru (профиль в архиве)
+📅 Зарегистрирован: 12.04.2023 на номер проверяемого
+📸 Загружено 2 фотографии
+🗑️ Удален в архив: 09.06.2025
+
+❗ ВОПРОСЫ БЕЗ ОТВЕТОВ:
+• Почему профиль создавался в период отношений?
+• Кто был найден через этот сайт?
+• Были ли встречи и свидания?
+
+🔍 Детальный анализ в полной проверке покажет ВСЮ правду!`,
+    purchases: '💳 ОБНАРУЖЕНЫ ПОДОЗРИТЕЛЬНЫЕ ПОКУПКИ!\n\n🛍️ Зафиксированы траты в категориях:\n• Рестораны и кафе\n• Подарки и украшения  \n• Цветы и сюрпризы\n\n❓ Для КОГО эти покупки?\n💰 Полный отчет покажет детали всех трат за 6 месяцев!',
+    promotion: `⏰ ОГРАНИЧЕННОЕ ПРЕДЛОЖЕНИЕ - ДЕЙСТВУЕТ ТОЛЬКО СЕГОДНЯ!
+
+Мини-отчет показал лишь верхушку айсберга. Получите ПОЛНУЮ картину того, что скрывает ваша вторая половина.
+
+🎁 ЭКСКЛЮЗИВНОЕ ПРЕДЛОЖЕНИЕ:
+Промокод PROMO888 = скидка 30% на полную проверку!
+
+✅ Закажите сегодня и получите максимально детальный анализ всей цифровой жизни вашего партнера.`,
+    fullCheckInfo: `🔍 ПОЛНАЯ ПРОВЕРКА РАСКРОЕТ ВСЕ СЕКРЕТЫ:
+
+✅ Детальный анализ ВСЕХ социальных сетей и мессенджеров
+✅ Список скрытых друзей и контактов с анализом отношений  
+✅ История переписок и характер общения
+✅ Полный отчет о сайтах знакомств и dating-приложениях
+✅ Детализация всех покупок за 6 месяцев
+✅ Временные метки активности и поведенческие паттерны
+✅ Профессиональные выводы и рекомендации
+
+🛡️ 100% конфиденциальность и анонимность гарантированы!`
   })
 
   const updateField = (field: keyof ReportData, value: string) => {
@@ -62,286 +96,281 @@ function App() {
   }
 
   const ReportView = () => (
-    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden print-page">
+    <div className="max-w-5xl mx-auto bg-gradient-to-br from-white to-gray-50 shadow-2xl rounded-2xl overflow-hidden print-page">
       {/* Header */}
-      <header className="border-b-2 border-gray-200 pb-6 mb-8 p-6 print-section">
-        <div className="flex justify-between items-center mb-4 no-print">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-8 print-section">
+        <div className="flex justify-between items-center mb-6 no-print">
           <button
             onClick={() => setActiveTab('parameters')}
-            className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-3 bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-sm"
           >
-            <Heart size={20} />
-            Верность.Про
+            <Heart size={24} />
+            <span className="font-semibold">Верность.Про</span>
           </button>
           <button
             onClick={exportToPDF}
-            className="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-3 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-lg"
           >
-            <FileText size={20} />
-            Конфиденциально!
+            <FileText size={24} />
+            <span className="font-semibold">Конфиденциально!</span>
           </button>
         </div>
         
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Результат мини-проверки на верность
-        </h1>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-3">
+            🔍 Результат мини-проверки на верность
+          </h1>
+          <p className="text-blue-100 text-lg">Профессиональный цифровой анализ</p>
+        </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm bg-gray-50 p-4 rounded-lg">
-          <div>
-            <strong>Дата проверки:</strong> {reportData.date}
-          </div>
-          <div>
-            <strong>Номер проверки:</strong> {reportData.reportNumber}
-          </div>
-          <div>
-            <strong>Информация о заказчике:</strong> {reportData.clientInfo || 'Не указана'}
+        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-xl p-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="font-semibold text-blue-100">Дата проверки</div>
+              <div className="text-xl font-bold">{reportData.date}</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="font-semibold text-blue-100">Номер проверки</div>
+              <div className="text-xl font-bold">{reportData.reportNumber}</div>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4">
+              <div className="font-semibold text-blue-100">Заказчик</div>
+              <div className="text-lg">{reportData.clientInfo || 'Конфиденциально'}</div>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="p-6 space-y-8">
-        {/* Информация о проверке - НОВЫЙ БЛОК */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Информация о проверке
-          </h2>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="text-sm leading-relaxed text-gray-800">
-              Проверка проведена {reportData.date} под номером {reportData.reportNumber}. 
-              В ходе мини-проверки проанализированы основные цифровые следы и публичная информация 
-              о проверяемом лице с использованием стандартных методов поиска.
-            </div>
+      <div className="p-8 space-y-8">
+        {/* Информация о проверке */}
+        <section className="bg-gradient-to-r from-gray-50 to-blue-50 rounded-2xl p-6 border-l-4 border-blue-500 print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <Shield className="text-blue-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Информация о проверке</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <p className="text-gray-700 leading-relaxed">
+              🔍 <strong>Профессиональная цифровая проверка</strong> проведена {reportData.date} под номером <strong>{reportData.reportNumber}</strong>.
+              <br />
+              📊 Проанализированы основные цифровые следы, социальные сети и публичная активность проверяемого лица.
+              <br />
+              ⚠️ <strong>Внимание:</strong> Данный мини-отчет содержит только базовую информацию. Полная картина доступна в расширенной проверке.
+            </p>
           </div>
         </section>
 
-        {/* Информация о заказчике - НОВЫЙ БЛОК */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Информация о заказчике
-          </h2>
-          <div className="bg-gray-50 p-4 rounded-lg">
-            <div className="text-sm leading-relaxed text-gray-800">
-              {reportData.clientInfo || 'Данные заказчика: конфиденциальная информация'}
-            </div>
+        {/* Информация о заказчике */}
+        <section className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border-l-4 border-purple-500 print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <Eye className="text-purple-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Информация о заказчике</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <p className="text-gray-700 leading-relaxed">
+              📋 <strong>Заказчик:</strong> {reportData.clientInfo || 'Конфиденциальная информация'}
+              <br />
+              🔒 Все данные заказчика защищены и не передаются третьим лицам
+            </p>
           </div>
         </section>
 
-        {/* Общая информация */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Общая информация
-          </h2>
+        {/* Общая информация - КОМПАКТНЫЙ БЛОК */}
+        <section className="bg-gradient-to-r from-white to-gray-50 rounded-2xl p-6 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-6">
+            <Eye className="text-gray-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Общая информация</h2>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">ФИО и дата рождения</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.fullName || 'Данные не найдены'}
+          {/* Компактная сетка */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+              <h3 className="font-semibold text-blue-800 mb-2">👤 Личные данные</h3>
+              <div className="text-sm text-gray-700 min-h-[50px] bg-white rounded p-3">
+                {reportData.fullName || '🔒 Найдены совпадения'}
               </div>
             </div>
             
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные номера телефонов</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.phoneNumbers || 'Данные не найдены'}
+            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+              <h3 className="font-semibold text-green-800 mb-2">📱 Контакты</h3>
+              <div className="text-sm text-gray-700 min-h-[50px] bg-white rounded p-3">
+                {reportData.phoneNumbers || '🔒 Множественные номера'}
               </div>
             </div>
             
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные E-mail адреса</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.emails || 'Данные не найдены'}
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные документы</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.documents || 'Данные не найдены'}
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные адреса</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.addresses || 'Данные не найдены'}
-              </div>
-            </div>
-            
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные автомобили</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.cars || 'Данные не найдены'}
-              </div>
-            </div>
-            
-            <div className="md:col-span-2 bg-gray-50 p-4 rounded-lg">
-              <h3 className="font-medium text-gray-700 mb-2">Найденные аккаунты соцсетей и мессенджеров</h3>
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.socialAccounts || 'Данные не найдены'}
+            <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+              <h3 className="font-semibold text-purple-800 mb-2">🌐 Соцсети</h3>
+              <div className="text-sm text-gray-700 min-h-[50px] bg-white rounded p-3">
+                {reportData.socialAccounts || '🔒 Скрытые профили'}
               </div>
             </div>
           </div>
-          
-          {/* Как записана в телефонной книге */}
-          <div className="mt-6">
-            <h3 className="font-medium text-gray-700 mb-3 text-lg">
-              Как записана ваша вторая половина в телефонной книге других людей
+
+          {/* Дополнительные поля в компактном виде */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div className="bg-gray-50 rounded-xl p-4">
+              <h3 className="font-semibold text-gray-700 mb-2">📧 Email</h3>
+              <div className="text-sm text-gray-600">{reportData.emails || '🔒 Скрыто'}</div>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4">
+              <h3 className="font-semibold text-gray-700 mb-2">📄 Документы</h3>
+              <div className="text-sm text-gray-600">{reportData.documents || '🔒 Найдены'}</div>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-4">
+              <h3 className="font-semibold text-gray-700 mb-2">🚗 Транспорт</h3>
+              <div className="text-sm text-gray-600">{reportData.cars || '🔒 Данные есть'}</div>
+            </div>
+          </div>
+
+          {/* Телефонная книга - отдельно */}
+          <div className="bg-yellow-50 rounded-xl p-6 border-l-4 border-yellow-400">
+            <h3 className="font-semibold text-yellow-800 mb-3 flex items-center gap-2">
+              📞 Как записана у других людей в телефонной книге
             </h3>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <div className="bg-white p-3 rounded border min-h-[60px] text-sm">
-                {reportData.phoneBookInfo || 'Данные не найдены'}
-              </div>
+            <div className="bg-white rounded-lg p-4 text-gray-700">
+              {reportData.phoneBookInfo || '💡 Найдены интересные записи...'}
             </div>
           </div>
         </section>
 
-        {/* Цифровая активность основного аккаунта ВК */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Цифровая активность основного аккаунта ВК
-          </h2>
-          <div className="bg-orange-50 border-l-4 border-orange-500 p-6 rounded-lg shadow-sm">
-            <div className="text-sm leading-relaxed text-gray-800">
+        {/* Цифровая активность ВК */}
+        <section className="bg-gradient-to-r from-orange-50 to-red-50 rounded-2xl p-6 border-l-4 border-orange-500 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <AlertTriangle className="text-orange-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Цифровая активность основного аккаунта ВК</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
               {reportData.vkActivity}
             </div>
           </div>
         </section>
 
-        {/* Информация о дополнительном найденном аккаунте ВК */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Информация о дополнительном найденном аккаунте ВК
-          </h2>
-          <div>
-            <h3 className="font-medium text-red-600 mb-3 flex items-center text-lg">
-              ⚠️ Найден дополнительный аккаунт ВК
-            </h3>
-            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-sm">
-              <div className="text-sm leading-relaxed text-gray-800">
-                {reportData.additionalVkAccount}
-              </div>
+        {/* Дополнительный аккаунт ВК */}
+        <section className="bg-gradient-to-r from-red-50 to-pink-50 rounded-2xl p-6 border-l-4 border-red-500 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <AlertTriangle className="text-red-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Обнаружен дополнительный аккаунт ВК</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-red-200">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line font-medium">
+              {reportData.additionalVkAccount}
             </div>
           </div>
         </section>
 
-        {/* Цифровая активность основного аккаунта в Телеграм */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Цифровая активность основного аккаунта в Телеграм
-          </h2>
-          <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-lg shadow-sm">
-            <div className="text-sm leading-relaxed text-gray-800">
+        {/* Telegram анализ */}
+        <section className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border-l-4 border-blue-500 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <MessageSquare className="text-blue-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Цифровая активность в Telegram</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-blue-200">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line font-medium">
               {reportData.telegramAnalysis}
             </div>
           </div>
         </section>
 
-        {/* Информация о найденных аккаунтах на сайтах знакомств и флирта */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Информация о найденных аккаунтах на сайтах знакомств и флирта
-          </h2>
-          <div>
-            <h3 className="font-medium text-red-600 mb-3 text-lg">Аналитическое заключение по результатам проверки</h3>
-            <div className="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg shadow-sm">
-              <div className="text-sm leading-relaxed text-gray-800">
-                {reportData.datingAnalysis}
-              </div>
+        {/* Сайты знакомств */}
+        <section className="bg-gradient-to-r from-red-50 to-rose-50 rounded-2xl p-6 border-l-4 border-red-600 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <Heart className="text-red-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Найдены аккаунты на сайтах знакомств</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-red-300">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line font-medium">
+              {reportData.datingAnalysis}
             </div>
           </div>
         </section>
 
-        {/* Отчет о последних покупках */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Отчет о последних покупках в сети
-          </h2>
-          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-6 rounded-lg shadow-sm">
-            <div className="text-sm leading-relaxed text-gray-800">
+        {/* Покупки */}
+        <section className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border-l-4 border-green-500 shadow-lg print-section">
+          <div className="flex items-center gap-3 mb-4">
+            <CreditCard className="text-green-600" size={28} />
+            <h2 className="text-2xl font-bold text-gray-800">Анализ покупок и трат</h2>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-green-200">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line font-medium">
               {reportData.purchases}
             </div>
           </div>
         </section>
 
         {/* Промо-блок */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-green-600 border-b-2 border-green-200 pb-2">
-            Успей получить скидку 50% на полную проверку на верность!
-          </h2>
-          <div className="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg shadow-sm">
-            <div className="text-sm leading-relaxed text-gray-800">
+        <section className="bg-gradient-to-r from-green-100 to-blue-100 rounded-2xl p-8 border-2 border-green-300 shadow-xl print-section">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-gray-800 mb-4">
+              🎯 Получите ПОЛНУЮ картину прямо сейчас!
+            </h2>
+            <div className="bg-white rounded-xl p-6 text-gray-700 leading-relaxed whitespace-pre-line">
               {reportData.promotion}
             </div>
           </div>
         </section>
 
-        {/* Кнопки действий */}
-        <section className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg print-section no-print">
-          <div className="text-center space-y-4">
-            <h3 className="text-lg font-semibold text-gray-800">
-              Узнайте полную информацию, которую скрывает ваша вторая половина прямо сейчас!
+        {/* Главная кнопка призыва к действию */}
+        <section className="bg-gradient-to-r from-blue-600 to-purple-700 rounded-2xl p-8 text-center shadow-2xl no-print">
+          <div className="text-white space-y-6">
+            <h3 className="text-3xl font-bold mb-4">
+              💡 Узнайте ВСЮ правду о вашей второй половине!
             </h3>
-            <p className="text-md text-gray-700 mb-4">
-              Стоимость полной проверки от 500 рублей в зависимости от индивидуальной технической сложности 
-              и объема информации. Точную сумму можно рассчитать прямо сейчас у нашего менеджера.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://vk.com/vernostpro"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition-colors font-semibold"
-              >
-                Перейти в сообщество ВК
-              </a>
-              <a
-                href="https://t.me/VernostService"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors font-semibold"
-              >
-                Рассчитать стоимость
-              </a>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-6">
+              <p className="text-xl mb-4">
+                🔥 <strong>Стоимость полной проверки от 500 рублей</strong>
+              </p>
+              <p className="text-blue-100">
+                Цена зависит от сложности проверки и объема информации. 
+                Точную стоимость рассчитает наш менеджер за 2 минуты.
+              </p>
             </div>
-            <p className="text-sm text-gray-600 font-medium">
-              Сообщите менеджеру ваш промокод со скидкой
+            <a
+              href="https://t.me/VernostService"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 text-white px-12 py-6 rounded-2xl text-2xl font-bold transition-all duration-300 shadow-2xl transform hover:scale-105"
+            >
+              🚀 РАССЧИТАТЬ СТОИМОСТЬ
+            </a>
+            <p className="text-blue-100 text-lg font-semibold mt-4">
+              💬 Сообщите менеджеру промокод <span className="bg-yellow-400 text-black px-3 py-1 rounded-lg">PROMO888</span> для скидки!
             </p>
           </div>
         </section>
 
         {/* Что получите */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Что вы получите при заказе полной проверки на верность
+        <section className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-6 shadow-lg print-section">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            🎁 Что вы получите в полной проверке
           </h2>
-          <div className="bg-gray-50 p-6 rounded-lg border">
-            <div className="text-sm leading-relaxed text-gray-800">
+          <div className="bg-white rounded-xl p-6 shadow-sm">
+            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
               {reportData.fullCheckInfo}
             </div>
           </div>
         </section>
 
         {/* Политика конфиденциальности */}
-        <section className="print-section">
-          <h2 className="text-xl font-semibold mb-4 text-gray-800 border-b-2 border-blue-200 pb-2">
-            Политика конфиденциальности и обеспечения анонимности клиентов
+        <section className="bg-gray-100 rounded-2xl p-6 print-section">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 flex items-center gap-2">
+            <Shield size={24} />
+            Политика конфиденциальности
           </h2>
-          <div className="bg-gray-100 p-6 rounded-lg border text-sm leading-relaxed">
-            Политика конфиденциальности и обеспечения анонимности клиентов. В целях обеспечения максимальной конфиденциальности и полной анонимности наших клиентов данный отчет передается исключительно заказчику и не сохраняется в наших системах в виде копий. После успешной отправки, отчет автоматически удаляется с сервера отправителя, что исключает его дальнейшее хранение. Мы придерживаемся строгой политики конфиденциальности и гарантируем полную анонимность наших клиентов! Вся информация, связанная с заказом, не сохраняется на наших серверах после его выполнения и не передается третьим лицам с нашей стороны ни при каких обстоятельствах.
+          <div className="bg-white rounded-xl p-6 text-sm leading-relaxed text-gray-600">
+            🔒 <strong>100% конфиденциальность гарантирована.</strong> Данный отчет передается исключительно заказчику и автоматически удаляется с наших серверов после отправки. Мы не сохраняем копии и не передаем информацию третьим лицам ни при каких обстоятельствах.
           </div>
         </section>
       </div>
 
       {/* Footer */}
-      <footer className="text-center text-sm text-gray-500 border-t bg-gray-50 p-4">
-        © All Rights Reserved. Proverka.Vernosti 2025.
+      <footer className="text-center text-sm text-gray-500 bg-gray-50 p-6 border-t">
+        © 2025 Верность.Про - Профессиональные проверки на верность
       </footer>
     </div>
   )
 
   const ParametersView = () => (
-    <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="max-w-5xl mx-auto bg-gradient-to-br from-white to-gray-50 shadow-2xl rounded-2xl overflow-hidden">
       <header className="border-b-2 border-gray-200 pb-6 mb-8 p-6 bg-gray-50">
         <div className="flex justify-between items-center">
           <button
@@ -690,7 +719,7 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-100 py-8 px-4">
       {activeTab === 'report' ? <ReportView /> : <ParametersView />}
     </div>
   )
