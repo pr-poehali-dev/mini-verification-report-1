@@ -23,8 +23,58 @@ interface ReportData {
   fullCheckInfo: string
 }
 
+interface ReportTemplate {
+  name: string
+  description: string
+  data: Partial<ReportData>
+}
+
 function App() {
   const [activeTab, setActiveTab] = useState<'report' | 'parameters'>('report')
+  
+  // Шаблоны отчетов
+  const reportTemplates: ReportTemplate[] = [
+    {
+      name: 'Текущий отчет (по умолчанию)',
+      description: 'Используется текущий настроенный отчет',
+      data: {}
+    },
+    {
+      name: 'Стандартная проверка ВК',
+      description: 'Базовая проверка с активностью в ВК',
+      data: {
+        vkActivity: '🔍 В основном профиле ВК обнаружена регулярная активность с определенными пользователями. Зафиксированы частые взаимодействия (Общение) с некоторыми скрытыми и открытыми друзьями ВК. 💬 В полной проверке вы узнаете профиле этих друзей, а так же их цифровую детализацию активности в сети.',
+        additionalVkAccount: '',
+        telegramAnalysis: '',
+        datingAnalysis: '',
+        purchases: '💳 Отчет о совершенных последних покупках\n\nЗакажи полную проверку на верность и получите подробный отчет с информацией о покупках вашей второй половина за последние пол года в розничных магазинах и интернет-ресурсах.',
+        phoneBookInfo: 'Записан как: Антон, Антон работа, Антон из спортзала'
+      }
+    },
+    {
+      name: 'Полная проверка с сайтами знакомств',
+      description: 'Включает обнаружение профилей на сайтах знакомств',
+      data: {
+        vkActivity: '🔍 В основном профиле ВК обнаружена регулярная активность с определенными пользователями. Зафиксированы частые взаимодействия (Общение) с некоторыми скрытыми и открытыми друзьями ВК. 💬 В полной проверке вы узнаете профиле этих друзей, а так же их цифровую детализацию активности в сети.',
+        datingAnalysis: `💔 Обнаружен профиль на сайте знакомств!\n\n🌐 Сайт: Mamba.ru (профиль в архиве)\n📅 Зарегистрирован: 12.04.2023 на номер проверяемого\n📸 Загружено 2 фотографии\n🗑️ Удален в архив: 08.09.2025\n\n❗ ВОПРОСЫ БЕЗ ОТВЕТОВ:\n• Почему профиль создавался в период отношений?\n• Кто был найден через этот сайт?\n• Были ли встречи и свидания?\n\n🔍 Детальный анализ в полной проверке покажет ВСЮ правду!`,
+        telegramAnalysis: '📱 ОБНАРУЖЕНА АКТИВНОСТЬ В ОСНОВНОМ АККАУНТЕ TELEGRAM!\n\n🕒 Ежедневная активность с 3-5 постоянными контактами\n💬 Регулярная переписка в вечернее время (20:00-23:00)\n👥 Участие в закрытых группах и каналах\n\n❓ С КЕМ именно общается ваша половина каждый день?\n🔍 Полная проверка раскроет ВСЕ секреты Telegram-активности!',
+        phoneBookInfo: 'Записан как: Маша, Маша Мамба, Ваня кафе с Мамбы, Лена из Мамбы'
+      }
+    },
+    {
+      name: 'Максимальная интрига',
+      description: 'Все блоки включены для максимального эффекта',
+      data: {
+        vkActivity: '🔍 В основном профиле ВК обнаружена регулярная активность с определенными пользователями. Зафиксированы частые взаимодействия (Общение) с некоторыми скрытыми и открытыми друзьями ВК. 💬 В полной проверке вы узнаете профиле этих друзей, а так же их цифровую детализацию активности в сети.',
+        additionalVkAccount: `🚨 Найден скрытый (Дополнительный) профиль ВК!\n\n📱 Профиль: https://vk.com/id362****24 (создан 23.01.2025)\n🔍 Найдено по совпадению цифровых отпечатков устройства\n\n⚠️ КРАТКАЯ ЦИФРОВАЯ СВОДКА:\n• Профиль активен несколько раз в месяц\n• 18 друзей (2 пересекаются с основным профилем!)\n• 24 сообщества (4 совпадают с основным)\n• Последняя активность: 21.08.2025\n\n💡 Возникает вопрос: зачем нужен второй профиль?\n🔓 Полный анализ покажет всю правду о скрытой активности!`,
+        telegramAnalysis: '📱 ОБНАРУЖЕНА АКТИВНОСТЬ В ОСНОВНОМ АККАУНТЕ TELEGRAM!\n\n🕒 Ежедневная активность с 3-5 постоянными контактами\n💬 Регулярная переписка в вечернее время (20:00-23:00)\n👥 Участие в закрытых группах и каналах\n\n❓ С КЕМ именно общается ваша половина каждый день?\n🔍 Полная проверка раскроет ВСЕ секреты Telegram-активности!',
+        datingAnalysis: `💔 Обнаружен профиль на сайте знакомств!\n\n🌐 Сайт: Mamba.ru (профиль в архиве)\n📅 Зарегистрирован: 12.04.2023 на номер проверяемого\n📸 Загружено 2 фотографии\n🗑️ Удален в архив: 08.09.2025\n\n❗ ВОПРОСЫ БЕЗ ОТВЕТОВ:\n• Почему профиль создавался в период отношений?\n• Кто был найден через этот сайт?\n• Были ли встречи и свидания?\n\n🔍 Детальный анализ в полной проверке покажет ВСЮ правду!`,
+        purchases: '💳 Отчет о совершенных последних покупках\n\nПокупка в феврале 2025 года в магазине «585» - золотое украшение на 13 499₽\nПокупка в мае 2025 года в «Цветы 24» - букет «Нежность» на 4 499₽\n\nЗакажи полную проверку на верность и получите подробный отчет с информацией о покупках вашей второй половина за последние пол года в розничных магазинах и интернет-ресурсах.',
+        phoneBookInfo: 'Записан как: Маша, Маша Мамба, Ваня кафе с Мамбы, Лена из Мамбы, Катя 585'
+      }
+    }
+  ]
+
   const [reportData, setReportData] = useState<ReportData>({
     date: new Date().toLocaleDateString('ru-RU'),
     reportNumber: 'В/П 06842-25',
@@ -89,6 +139,23 @@ function App() {
 
   const updateField = (field: keyof ReportData, value: string) => {
     setReportData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const applyTemplate = (template: ReportTemplate) => {
+    if (template.name === 'Текущий отчет (по умолчанию)') {
+      return // Не изменяем данные для текущего отчета
+    }
+    
+    setReportData(prev => ({
+      ...prev,
+      ...template.data,
+      // Сохраняем основные параметры
+      date: prev.date,
+      reportNumber: prev.reportNumber,
+      clientInfo: prev.clientInfo,
+      promotion: prev.promotion,
+      fullCheckInfo: prev.fullCheckInfo
+    }))
   }
 
   const exportToPDF = () => {
@@ -386,6 +453,37 @@ function App() {
       </header>
 
       <div className="p-6 space-y-8">
+        {/* Шаблоны отчетов */}
+        <section className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-200">
+          <h2 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2 flex items-center gap-2">
+            <FileText size={20} />
+            Автогенерация шаблонов отчетов
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {reportTemplates.map((template, index) => (
+              <div key={index} className="bg-white rounded-lg p-4 border border-gray-200 hover:border-green-400 transition-colors">
+                <h3 className="font-semibold text-gray-800 mb-2">{template.name}</h3>
+                <p className="text-sm text-gray-600 mb-3">{template.description}</p>
+                <button
+                  onClick={() => applyTemplate(template)}
+                  className="w-full bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                >
+                  Применить шаблон
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="bg-green-100 border border-green-300 p-3 rounded mt-4">
+            <p className="text-xs text-green-700 font-medium">💡 ИНСТРУКЦИЯ:</p>
+            <ul className="text-xs text-green-700 mt-1 space-y-1">
+              <li>• "Текущий отчет" - сохраняет все ваши настройки</li>
+              <li>• Остальные шаблоны заполнят поля автоматически</li>
+              <li>• После применения шаблона можно редактировать любые поля</li>
+              <li>• Основные параметры (дата, номер) всегда сохраняются</li>
+            </ul>
+          </div>
+        </section>
+
         {/* Основные параметры */}
         <section className="bg-blue-50 p-6 rounded-lg">
           <h2 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2">Основные параметры</h2>
@@ -398,8 +496,9 @@ function App() {
                 type="text"
                 value={reportData.date}
                 onChange={(e) => updateField('date', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="дд.мм.гггг"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Автоматически устанавливается сегодняшняя дата</p>
             </div>
@@ -411,8 +510,9 @@ function App() {
                 type="text"
                 value={reportData.reportNumber}
                 onChange={(e) => updateField('reportNumber', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="В/П 06842-25"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Формат: В/П XXXXX-YY</p>
             </div>
@@ -424,8 +524,9 @@ function App() {
                 type="text"
                 value={reportData.clientInfo}
                 onChange={(e) => updateField('clientInfo', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Номер телефона, VK ID или Telegram"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Данные для связи с заказчиком</p>
             </div>
@@ -443,8 +544,9 @@ function App() {
               <textarea
                 value={reportData.fullName}
                 onChange={(e) => updateField('fullName', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="Иванов Иван Иванович, 15.05.1990"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Полное ФИО и дата рождения в формате дд.мм.гггг</p>
             </div>
@@ -456,8 +558,9 @@ function App() {
               <textarea
                 value={reportData.phoneNumbers}
                 onChange={(e) => updateField('phoneNumbers', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="+7 981 123-45-67, +7 921 987-65-43"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные номера телефонов через запятую</p>
             </div>
@@ -469,8 +572,9 @@ function App() {
               <textarea
                 value={reportData.emails}
                 onChange={(e) => updateField('emails', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="email@example.com, personal@gmail.com"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные электронные адреса</p>
             </div>
@@ -482,8 +586,9 @@ function App() {
               <textarea
                 value={reportData.documents}
                 onChange={(e) => updateField('documents', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="Паспорт 4012 123456, СНИЛС 123-456-789 01"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Типы и номера найденных документов</p>
             </div>
@@ -495,8 +600,9 @@ function App() {
               <textarea
                 value={reportData.addresses}
                 onChange={(e) => updateField('addresses', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="г. Москва, ул. Ленина, д. 10, кв. 5"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные адреса проживания/регистрации</p>
             </div>
@@ -508,8 +614,9 @@ function App() {
               <textarea
                 value={reportData.cars}
                 onChange={(e) => updateField('cars', e.target.value)}
-                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[80px]"
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="А123БВ777, Х456УТ199"
+                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Государственные номера найденных автомобилей</p>
             </div>
@@ -522,8 +629,9 @@ function App() {
             <textarea
               value={reportData.socialAccounts}
               onChange={(e) => updateField('socialAccounts', e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[100px] resize-none"
               placeholder="VK: https://vk.com/id123, Instagram: @username, Telegram: @tg_username"
+              spellCheck={false}
             />
             <p className="text-xs text-gray-500 mt-1">Ссылки на все найденные профили в соцсетях и мессенджерах</p>
           </div>
@@ -535,8 +643,9 @@ function App() {
             <textarea
               value={reportData.phoneBookInfo}
               onChange={(e) => updateField('phoneBookInfo', e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[100px]"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[100px] resize-none"
               placeholder="Маша, Маша Мамба, Ваня кафе с Мамбы"
+              spellCheck={false}
             />
             <div className="bg-yellow-100 border border-yellow-300 p-3 rounded mt-2">
               <p className="text-xs text-yellow-700 font-medium">💡 СЕКРЕТ ЭФФЕКТИВНОСТИ:</p>
@@ -556,7 +665,8 @@ function App() {
             <textarea
               value={reportData.vkActivity}
               onChange={(e) => updateField('vkActivity', e.target.value)}
-              className="w-full p-3 border-2 border-orange-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 min-h-[100px]"
+              className="w-full p-3 border-2 border-orange-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none min-h-[100px] resize-none"
+              spellCheck={false}
             />
             <div className="bg-orange-50 border border-orange-200 p-3 rounded mt-2">
               <p className="text-xs text-orange-600 font-medium">💡 Этот блок мотивирует заказать полную проверку</p>
@@ -574,7 +684,8 @@ function App() {
             <textarea
               value={reportData.additionalVkAccount}
               onChange={(e) => updateField('additionalVkAccount', e.target.value)}
-              className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 min-h-[150px]"
+              className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none min-h-[150px] resize-none"
+              spellCheck={false}
             />
             <div className="bg-red-50 border border-red-200 p-3 rounded mt-2">
               <p className="text-xs text-red-600 font-medium">🎯 ВАЖНО: Этот блок создает максимальную интригу!</p>
@@ -597,7 +708,8 @@ function App() {
             <textarea
               value={reportData.telegramAnalysis}
               onChange={(e) => updateField('telegramAnalysis', e.target.value)}
-              className="w-full p-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[120px]"
+              className="w-full p-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[120px] resize-none"
+              spellCheck={false}
             />
             <div className="bg-blue-50 border border-blue-200 p-3 rounded mt-2">
               <p className="text-xs text-blue-600 font-medium">📝 Добавлена информация об ежедневной активности</p>
@@ -616,7 +728,8 @@ function App() {
             <textarea
               value={reportData.datingAnalysis}
               onChange={(e) => updateField('datingAnalysis', e.target.value)}
-              className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 min-h-[150px]"
+              className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none min-h-[150px] resize-none"
+              spellCheck={false}
             />
             <div className="bg-red-50 border border-red-200 p-3 rounded mt-2">
               <p className="text-xs text-red-600 font-medium">🎯 СОКРАЩЕН БЕЗ ПОТЕРИ ИНТРИГИ!</p>
@@ -639,8 +752,9 @@ function App() {
             <textarea
               value={reportData.purchases}
               onChange={(e) => updateField('purchases', e.target.value)}
-              className="w-full p-3 border-2 border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 min-h-[120px]"
+              className="w-full p-3 border-2 border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none min-h-[120px] resize-none"
               placeholder="Если найден номер карты, добавьте интригующую покупку в 585 или Цветы 24"
+              spellCheck={false}
             />
             <div className="bg-yellow-100 border border-yellow-300 p-3 rounded mt-2">
               <p className="text-xs text-yellow-700 font-medium">💡 ПРИМЕРЫ ИНТРИГУЮЩИХ ПОКУПОК:</p>
@@ -663,7 +777,8 @@ function App() {
             <textarea
               value={reportData.promotion}
               onChange={(e) => updateField('promotion', e.target.value)}
-              className="w-full p-3 border-2 border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 min-h-[120px]"
+              className="w-full p-3 border-2 border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none min-h-[120px] resize-none"
+              spellCheck={false}
             />
             <div className="bg-green-100 border border-green-300 p-3 rounded mt-2">
               <p className="text-xs text-green-700 font-medium">✅ ОПТИМИЗИРОВАНО:</p>
@@ -686,7 +801,8 @@ function App() {
             <textarea
               value={reportData.fullCheckInfo}
               onChange={(e) => updateField('fullCheckInfo', e.target.value)}
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-[150px]"
+              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[150px] resize-none"
+              spellCheck={false}
             />
             <p className="text-xs text-gray-500 mt-1">Описание преимуществ и возможностей полной проверки</p>
           </div>
