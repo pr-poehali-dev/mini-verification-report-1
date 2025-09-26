@@ -247,7 +247,7 @@ export default function ReportForm() {
           {/* Promotion Block */}
           <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
             <CardHeader>
-              <CardTitle className="text-xl">Успей получить скидку 50% на полную проверку на верность!</CardTitle>
+              <CardTitle className="text-xl">Успей получить скидку 30% на полную проверку на верность!</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-blue-100">
@@ -257,24 +257,16 @@ export default function ReportForm() {
                 Мы предлагаем вам воспользоваться услугой полной проверки верности вашей второй половины. В полном отчете вы получите исчерпывающую и точную информацию, которая позволит вам принять обоснованные решения и окончательно развеять все сомнения.
               </p>
               <div className="bg-white/20 p-4 rounded-lg">
-                <p className="font-medium">Специальное предложение: акция «Скидка 50% на полную проверку за отзыв!»</p>
+                <p className="font-medium">Специальное предложение: акция «Скидка 30% на полную проверку за отзыв!»</p>
                 <p className="text-blue-100 mt-2">Ваш индивидуальный промокод: <span className="font-mono bg-white/20 px-2 py-1 rounded">PROMO888</span></p>
               </div>
               <div className="flex gap-4">
                 <Button 
                   className="bg-white text-blue-600 hover:bg-blue-50"
-                  onClick={() => window.open('https://vk.com/vernostpro', '_blank')}
+                  onClick={() => window.open('https://t.me/VernostService', '_blank')}
                 >
                   <Icon name="ExternalLink" size={16} className="mr-2" />
                   Получите полный отчет со скидкой 30%!
-                </Button>
-                <Button 
-                  variant="outline"
-                  className="border-white text-white hover:bg-white/20"
-                  onClick={() => window.open('https://t.me/VernostService', '_blank')}
-                >
-                  <Icon name="MessageCircle" size={16} className="mr-2" />
-                  Написать менеджеру
                 </Button>
               </div>
             </CardContent>
@@ -326,7 +318,7 @@ export default function ReportForm() {
               <Button 
                 size="lg" 
                 className="text-lg px-8"
-                onClick={() => window.open('https://vk.com/vernostpro', '_blank')}
+                onClick={() => window.open('https://t.me/VernostService', '_blank')}
               >
                 Получить полный отчет!
               </Button>
