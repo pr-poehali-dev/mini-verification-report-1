@@ -29,30 +29,7 @@ interface ReportTemplate {
   data: Partial<ReportData>
 }
 
-// Компонент для тестирования ввода
-const TestInput = () => {
-  const [testValue, setTestValue] = useState('')
-  
-  return (
-    <div className="bg-purple-50 p-4 rounded-lg border-2 border-purple-300 mb-4">
-      <h3 className="text-lg font-bold text-purple-800 mb-2">🔧 ИЗОЛИРОВАННЫЙ ТЕСТ</h3>
-      <label className="block text-sm font-medium text-purple-700 mb-2">
-        Полностью изолированное поле (свое состояние):
-      </label>
-      <input
-        type="text"
-        value={testValue}
-        onChange={(e) => {
-          console.log('Isolated test change:', e.target.value)
-          setTestValue(e.target.value)
-        }}
-        className="w-full p-3 border-2 border-purple-300 rounded-lg"
-        placeholder="Изолированный тест..."
-      />
-      <p className="text-xs text-purple-600 mt-1">Значение: "{testValue}"</p>
-    </div>
-  )
-}
+
 
 function App() {
   const [activeTab, setActiveTab] = useState<'report' | 'parameters'>('report')
@@ -163,17 +140,7 @@ function App() {
   })
 
   const updateField = (field: keyof ReportData, value: string) => {
-    console.log('updateField called:', field, value)
-    try {
-      setReportData(prev => {
-        console.log('Previous state:', prev)
-        const newData = { ...prev, [field]: value }
-        console.log('New state will be:', newData)
-        return newData
-      })
-    } catch (error) {
-      console.error('Error in updateField:', error)
-    }
+    setReportData(prev => ({ ...prev, [field]: value }))
   }
 
   const applyTemplate = (template: ReportTemplate) => {
@@ -488,28 +455,6 @@ function App() {
       </header>
 
       <div className="p-6 space-y-8">
-        {/* ИЗОЛИРОВАННЫЙ ТЕСТ */}
-        <TestInput />
-        
-        {/* ТЕСТОВОЕ ПОЛЕ для отладки */}
-        <section className="bg-red-50 p-4 rounded-lg border-2 border-red-300">
-          <h3 className="text-lg font-bold text-red-800 mb-2">🔧 ТЕСТ ВВОДА ТЕКСТА</h3>
-          <label className="block text-sm font-medium text-red-700 mb-2">
-            Тестовое поле (если здесь можно печатать, то проблема в других полях):
-          </label>
-          <input
-            type="text"
-            value={reportData.fullName}
-            onChange={(e) => {
-              console.log('Test input change:', e.target.value)
-              updateField('fullName', e.target.value)
-            }}
-            className="w-full p-3 border-2 border-red-300 rounded-lg focus:border-red-500 outline-none"
-            placeholder="Введите любой текст для тестирования..."
-          />
-          <p className="text-xs text-red-600 mt-1">Текущее значение: "{reportData.fullName}"</p>
-        </section>
-
         {/* Шаблоны отчетов */}
         <section className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg border-2 border-green-200">
           <h2 className="text-lg font-semibold mb-4 text-gray-800 border-b pb-2 flex items-center gap-2">
@@ -550,13 +495,11 @@ function App() {
                 Дата проверки
               </label>
               <input
+                key="date"
                 type="text"
                 value={reportData.date}
-                onChange={(e) => {
-                  console.log('Date input change:', e.target.value)
-                  updateField('date', e.target.value)
-                }}
-                className="w-full p-3 border rounded-lg"
+                onChange={(e) => updateField('date', e.target.value)}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="дд.мм.гггг"
               />
               <p className="text-xs text-gray-500 mt-1">Автоматически устанавливается сегодняшняя дата</p>
@@ -566,12 +509,12 @@ function App() {
                 Номер проверки
               </label>
               <input
+                key="reportNumber"
                 type="text"
                 value={reportData.reportNumber}
                 onChange={(e) => updateField('reportNumber', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="В/П 06842-25"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Формат: В/П XXXXX-YY</p>
             </div>
@@ -580,12 +523,12 @@ function App() {
                 Информация о заказчике
               </label>
               <input
+                key="clientInfo"
                 type="text"
                 value={reportData.clientInfo}
                 onChange={(e) => updateField('clientInfo', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                 placeholder="Номер телефона, VK ID или Telegram"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Данные для связи с заказчиком</p>
             </div>
@@ -601,12 +544,10 @@ function App() {
                 ФИО и дата рождения
               </label>
               <textarea
+                key="fullName"
                 value={reportData.fullName}
-                onChange={(e) => {
-                  console.log('FullName textarea change:', e.target.value)
-                  updateField('fullName', e.target.value)
-                }}
-                className="w-full p-3 border rounded-lg min-h-[80px]"
+                onChange={(e) => updateField('fullName', e.target.value)}
+                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="Иванов Иван Иванович, 15.05.1990"
               />
               <p className="text-xs text-gray-500 mt-1">Полное ФИО и дата рождения в формате дд.мм.гггг</p>
@@ -617,11 +558,11 @@ function App() {
                 Найденные номера телефонов
               </label>
               <textarea
+                key="phoneNumbers"
                 value={reportData.phoneNumbers}
                 onChange={(e) => updateField('phoneNumbers', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="+7 981 123-45-67, +7 921 987-65-43"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные номера телефонов через запятую</p>
             </div>
@@ -631,11 +572,11 @@ function App() {
                 Найденные E-mail адреса
               </label>
               <textarea
+                key="emails"
                 value={reportData.emails}
                 onChange={(e) => updateField('emails', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="email@example.com, personal@gmail.com"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные электронные адреса</p>
             </div>
@@ -645,11 +586,11 @@ function App() {
                 Найденные документы
               </label>
               <textarea
+                key="documents"
                 value={reportData.documents}
                 onChange={(e) => updateField('documents', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="Паспорт 4012 123456, СНИЛС 123-456-789 01"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Типы и номера найденных документов</p>
             </div>
@@ -659,11 +600,11 @@ function App() {
                 Найденные адреса
               </label>
               <textarea
+                key="addresses"
                 value={reportData.addresses}
                 onChange={(e) => updateField('addresses', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="г. Москва, ул. Ленина, д. 10, кв. 5"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Все найденные адреса проживания/регистрации</p>
             </div>
@@ -673,11 +614,11 @@ function App() {
                 Найденные автомобили
               </label>
               <textarea
+                key="cars"
                 value={reportData.cars}
                 onChange={(e) => updateField('cars', e.target.value)}
                 className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[80px] resize-none"
                 placeholder="А123БВ777, Х456УТ199"
-                spellCheck={false}
               />
               <p className="text-xs text-gray-500 mt-1">Государственные номера найденных автомобилей</p>
             </div>
@@ -688,11 +629,11 @@ function App() {
               Найденные аккаунты соцсетей и мессенджеров
             </label>
             <textarea
+              key="socialAccounts"
               value={reportData.socialAccounts}
               onChange={(e) => updateField('socialAccounts', e.target.value)}
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[100px] resize-none"
               placeholder="VK: https://vk.com/id123, Instagram: @username, Telegram: @tg_username"
-              spellCheck={false}
             />
             <p className="text-xs text-gray-500 mt-1">Ссылки на все найденные профили в соцсетях и мессенджерах</p>
           </div>
@@ -702,11 +643,11 @@ function App() {
               📞 Как записана вторая половина у других людей в телефонной книге
             </label>
             <textarea
+              key="phoneBookInfo"
               value={reportData.phoneBookInfo}
               onChange={(e) => updateField('phoneBookInfo', e.target.value)}
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[100px] resize-none"
               placeholder="Маша, Маша Мамба, Ваня кафе с Мамбы"
-              spellCheck={false}
             />
             <div className="bg-yellow-100 border border-yellow-300 p-3 rounded mt-2">
               <p className="text-xs text-yellow-700 font-medium">💡 СЕКРЕТ ЭФФЕКТИВНОСТИ:</p>
@@ -724,10 +665,10 @@ function App() {
               🔥 Активность ВК (ИНТРИГА ДЛЯ КЛИЕНТА)
             </label>
             <textarea
+              key="vkActivity"
               value={reportData.vkActivity}
               onChange={(e) => updateField('vkActivity', e.target.value)}
               className="w-full p-3 border-2 border-orange-200 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 outline-none min-h-[100px] resize-none"
-              spellCheck={false}
             />
             <div className="bg-orange-50 border border-orange-200 p-3 rounded mt-2">
               <p className="text-xs text-orange-600 font-medium">💡 Этот блок мотивирует заказать полную проверку</p>
@@ -743,10 +684,10 @@ function App() {
               ⚠️ Найден дополнительный аккаунт ВК (ШАБЛОННЫЙ ТЕКСТ - СОЗДАЕТ ИНТРИГУ)
             </label>
             <textarea
+              key="additionalVkAccount"
               value={reportData.additionalVkAccount}
               onChange={(e) => updateField('additionalVkAccount', e.target.value)}
               className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none min-h-[150px] resize-none"
-              spellCheck={false}
             />
             <div className="bg-red-50 border border-red-200 p-3 rounded mt-2">
               <p className="text-xs text-red-600 font-medium">🎯 ВАЖНО: Этот блок создает максимальную интригу!</p>
@@ -767,10 +708,10 @@ function App() {
               📱 Анализ активности в Telegram
             </label>
             <textarea
+              key="telegramAnalysis"
               value={reportData.telegramAnalysis}
               onChange={(e) => updateField('telegramAnalysis', e.target.value)}
               className="w-full p-3 border-2 border-blue-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[120px] resize-none"
-              spellCheck={false}
             />
             <div className="bg-blue-50 border border-blue-200 p-3 rounded mt-2">
               <p className="text-xs text-blue-600 font-medium">📝 Добавлена информация об ежедневной активности</p>
@@ -787,10 +728,10 @@ function App() {
               💋 Аналитическое заключение (СОКРАЩЕННЫЙ ИНТРИГУЮЩИЙ ТЕКСТ)
             </label>
             <textarea
+              key="datingAnalysis"
               value={reportData.datingAnalysis}
               onChange={(e) => updateField('datingAnalysis', e.target.value)}
               className="w-full p-3 border-2 border-red-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none min-h-[150px] resize-none"
-              spellCheck={false}
             />
             <div className="bg-red-50 border border-red-200 p-3 rounded mt-2">
               <p className="text-xs text-red-600 font-medium">🎯 СОКРАЩЕН БЕЗ ПОТЕРИ ИНТРИГИ!</p>
@@ -811,11 +752,11 @@ function App() {
               💳 Отчет о покупках
             </label>
             <textarea
+              key="purchases"
               value={reportData.purchases}
               onChange={(e) => updateField('purchases', e.target.value)}
               className="w-full p-3 border-2 border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none min-h-[120px] resize-none"
               placeholder="Если найден номер карты, добавьте интригующую покупку в 585 или Цветы 24"
-              spellCheck={false}
             />
             <div className="bg-yellow-100 border border-yellow-300 p-3 rounded mt-2">
               <p className="text-xs text-yellow-700 font-medium">💡 ПРИМЕРЫ ИНТРИГУЮЩИХ ПОКУПОК:</p>
@@ -836,10 +777,10 @@ function App() {
               🎉 Текст акции (УБРАНО СЛОВО "БЕСПЛАТНЫЙ")
             </label>
             <textarea
+              key="promotion"
               value={reportData.promotion}
               onChange={(e) => updateField('promotion', e.target.value)}
               className="w-full p-3 border-2 border-green-200 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none min-h-[120px] resize-none"
-              spellCheck={false}
             />
             <div className="bg-green-100 border border-green-300 p-3 rounded mt-2">
               <p className="text-xs text-green-700 font-medium">✅ ОПТИМИЗИРОВАНО:</p>
@@ -860,10 +801,10 @@ function App() {
               📋 Что клиент получит при заказе полной проверки
             </label>
             <textarea
+              key="fullCheckInfo"
               value={reportData.fullCheckInfo}
               onChange={(e) => updateField('fullCheckInfo', e.target.value)}
               className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none min-h-[150px] resize-none"
-              spellCheck={false}
             />
             <p className="text-xs text-gray-500 mt-1">Описание преимуществ и возможностей полной проверки</p>
           </div>
@@ -892,24 +833,7 @@ function App() {
           </div>
         </div>
 
-        {/* ВТОРОЕ ТЕСТОВОЕ ПОЛЕ */}
-        <section className="bg-yellow-50 p-4 rounded-lg border-2 border-yellow-300">
-          <h3 className="text-lg font-bold text-yellow-800 mb-2">🔧 ВТОРОЙ ТЕСТ</h3>
-          <label className="block text-sm font-medium text-yellow-700 mb-2">
-            Второе тестовое поле (другое поле для сравнения):
-          </label>
-          <textarea
-            value={reportData.phoneNumbers}
-            onChange={(e) => {
-              console.log('Second test change:', e.target.value)
-              updateField('phoneNumbers', e.target.value)
-            }}
-            className="w-full p-3 border-2 border-yellow-300 rounded-lg"
-            placeholder="Второй тест..."
-            rows={3}
-          />
-          <p className="text-xs text-yellow-600 mt-1">Текущее значение: "{reportData.phoneNumbers}"</p>
-        </section>
+
       </div>
     </div>
   )
